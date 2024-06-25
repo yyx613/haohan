@@ -103,13 +103,15 @@ class JobSheetController extends Controller
                     for ($row = 0; $row < $row_count; $row++) {
                         $not_last_row = $row != ($row_count - 1);
 
+                        $thin_top = '';
+
                         if ($row > 0) {
                             $mutirow_not_last = $not_last_row ? "border-bottom:1px solid white;" : "";
 
-                            $leader_list_string .= "<tr><td colspan='2' class='table_detail_key' style='border-top:1px solid white;{$mutirow_not_last}'></td>";
-                        }
+                            $leader_list_string .= "<tr><td colspan='2' class='table_detail_key thin_bottom' style='border-top:1px solid white;{$mutirow_not_last}'></td>";
 
-                        $thin_bottom = 'thin_bottom';
+                            $thin_top = 'thin_top';
+                        }
 
                         for ($col = 0; $col < 8; $col++) {
                             $leader_name = '';
@@ -138,7 +140,7 @@ class JobSheetController extends Controller
                                 }
                             }
 
-                            $leader_list_string .= "<td class='{$leader_editted} table_detail_value thin_bottom'><span class='{$leader_double} {$can_drive_lorry} {$leader_name_chinese}'>{$leader_name}</span></td>";
+                            $leader_list_string .= "<td class='{$leader_editted} table_detail_value {$thin_top} thin_bottom'><span class='{$leader_double} {$can_drive_lorry} {$leader_name_chinese}'>{$leader_name}</span></td>";
                         }
 
                         if ($not_last_row) {
@@ -177,7 +179,7 @@ class JobSheetController extends Controller
 
                     $multirow_border_bottom = $row_count > 1 ? "border-bottom:1px solid white;" : "";
 
-                    $team_member_list_string .= "<td colspan='2' class='table_detail_key' style='{$multirow_border_bottom}'><span style='float: left;'>Member :</span><span style='float: right;'>{$team_member_list_count}</span></td>";
+                    $team_member_list_string .= "<td colspan='2' class='table_detail_key thin_top' style='{$multirow_border_bottom}'><span style='float: left;'>Member :</span><span style='float: right;'>{$team_member_list_count}</span></td>";
 
                     for ($row = 0; $row < $row_count; $row++) {
                         $not_last_row = $row != ($row_count - 1);
@@ -217,7 +219,7 @@ class JobSheetController extends Controller
                                 }
                             }
 
-                            $team_member_list_string .= "<td class='{$member_editted} table_detail_value {$thin_bottom}'><span class='{$member_double} {$can_drive_lorry} {$member_name_chinese}'>{$member_name}</span></td>";
+                            $team_member_list_string .= "<td class='{$member_editted} table_detail_value thin_top {$thin_bottom}'><span class='{$member_double} {$can_drive_lorry} {$member_name_chinese}'>{$member_name}</span></td>";
                         }
 
                         if ($row != ($row_count - 1)) {
@@ -259,10 +261,14 @@ class JobSheetController extends Controller
                     for ($row = 0; $row < $row_count; $row++) {
                         $not_last_row = $row != ($row_count - 1);
 
+                        $thin_top = '';
+
                         if ($row > 0) {
                             $mutirow_not_last = $not_last_row ? "border-bottom:1px solid white;" : "";
 
                             $team_vehicle_list_string .= "<tr><td colspan='2' class='table_detail_key' style='border-top:1px solid white;{$mutirow_not_last}'></td>";
+
+                            $thin_top = 'thin_top';
                         }
 
                         $thin_bottom = $not_last_row ? 'thin_bottom' : '';
@@ -289,7 +295,7 @@ class JobSheetController extends Controller
                                 }
                             }
 
-                            $team_vehicle_list_string .= "<td class='{$vehicle_editted} table_detail_value {$thin_bottom}'><span class='{$vehicle_double} {$vehicle_name_chinese}'>{$vehicle_name}</span></td>";
+                            $team_vehicle_list_string .= "<td class='{$vehicle_editted} table_detail_value {$thin_top} {$thin_bottom}'><span class='{$vehicle_double} {$vehicle_name_chinese}'>{$vehicle_name}</span></td>";
                         }
 
                         if ($row != ($row_count - 1)) {
@@ -385,7 +391,7 @@ class JobSheetController extends Controller
 
                         $location_chinese = $thisController->containChineseCharacters($task_location_string);
 
-                        $team_task_list_string .= "<tr><td style='width: 10%;border-top:1px solid white;'></td><td style='width: 10%; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 2px;'><span style='float: right;'>Venue :</span></td><td colspan='8' class='{$location_editted} {$location_chinese}' style='width: 80%; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px;'>{$task_location_string}</td></tr>";
+                        $team_task_list_string .= "<tr><td style='width: 10%;border-top:1px solid white;'></td><td style='width: 10%; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 2px;border-top:1px solid #d9d9d9;'><span style='float: right;'>Venue :</span></td><td colspan='8' class='{$location_editted} {$location_chinese}' style='width: 80%; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px;border-top:1px solid #d9d9d9;'>{$task_location_string}</td></tr>";
 
                         $current_task_count++;
                     }
@@ -439,10 +445,14 @@ class JobSheetController extends Controller
                 for ($row = 0; $row < $row_count; $row++) {
                     $not_last_row = $row != ($row_count - 1);
 
+                    $thin_top = '';
+
                     if ($row > 0) {
                         $mutirow_not_last = $not_last_row ? "border-bottom:1px solid #ddebf7;" : "";
 
                         $annual_leave_list_string .= "<tr><td class='table_detail_key' style='border-top:1px solid #ddebf7;{$mutirow_not_last}'></td>";
+
+                        $thin_top = 'thin_top';
                     }
 
                     $thin_bottom = $not_last_row ? 'thin_bottom' : '';
@@ -466,7 +476,7 @@ class JobSheetController extends Controller
                             }
                         }
 
-                        $annual_leave_list_string .= "<td class='{$member_editted} table_detail_value {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
+                        $annual_leave_list_string .= "<td class='{$member_editted} table_detail_value {$thin_top} {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
                     }
 
                     if ($row != ($row_count - 1)) {
@@ -512,10 +522,14 @@ class JobSheetController extends Controller
                 for ($row = 0; $row < $row_count; $row++) {
                     $not_last_row = $row != ($row_count - 1);
 
+                    $thin_top = '';
+
                     if ($row > 0) {
                         $mutirow_not_last = $not_last_row ? "border-bottom:1px solid #ddebf7;" : "";
 
                         $mc_list_string .= "<tr><td class='table_detail_key' style='border-top:1px solid #ddebf7;{$mutirow_not_last}'></td>";
+
+                        $thin_top = 'thin_top';
                     }
 
                     $thin_bottom = $not_last_row ? 'thin_bottom' : '';
@@ -539,7 +553,7 @@ class JobSheetController extends Controller
                             }
                         }
 
-                        $mc_list_string .= "<td class='{$member_editted} table_detail_value {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
+                        $mc_list_string .= "<td class='{$member_editted} table_detail_value {$thin_top} {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
                     }
 
                     if ($row != ($row_count - 1)) {
@@ -585,10 +599,14 @@ class JobSheetController extends Controller
                 for ($row = 0; $row < $row_count; $row++) {
                     $not_last_row = $row != ($row_count - 1);
 
+                    $thin_top = '';
+
                     if ($row > 0) {
                         $mutirow_not_last = $not_last_row ? "border-bottom:1px solid #ddebf7;" : "";
 
                         $emergency_leave_list_string .= "<tr><td class='table_detail_key' style='border-top:1px solid #ddebf7;{$mutirow_not_last}'></td>";
+
+                        $thin_top = 'thin_top';
                     }
 
                     $thin_bottom = $not_last_row ? 'thin_bottom' : '';
@@ -612,7 +630,7 @@ class JobSheetController extends Controller
                             }
                         }
 
-                        $emergency_leave_list_string .= "<td class='{$member_editted} table_detail_value {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
+                        $emergency_leave_list_string .= "<td class='{$member_editted} table_detail_value {$thin_top} {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
                     }
 
                     if ($row != ($row_count - 1)) {
@@ -658,10 +676,14 @@ class JobSheetController extends Controller
                 for ($row = 0; $row < $row_count; $row++) {
                     $not_last_row = $row != ($row_count - 1);
 
+                    $thin_top = '';
+
                     if ($row > 0) {
                         $mutirow_not_last = $not_last_row ? "border-bottom:1px solid #ddebf7;" : "";
 
                         $holiday_list_string .= "<tr><td class='table_detail_key' style='border-top:1px solid #ddebf7;{$mutirow_not_last}'></td>";
+
+                        $thin_top = 'thin_top';
                     }
 
                     $thin_bottom = $not_last_row ? 'thin_bottom' : '';
@@ -685,7 +707,7 @@ class JobSheetController extends Controller
                             }
                         }
 
-                        $holiday_list_string .= "<td class='{$member_editted} table_detail_value {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
+                        $holiday_list_string .= "<td class='{$member_editted} table_detail_value {$thin_top} {$thin_bottom} {$member_chinese}'>{$member_name}</td>";
                     }
 
                     if ($row != ($row_count - 1)) {
