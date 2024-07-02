@@ -733,6 +733,11 @@ class JobSheetController extends Controller
 
         $leave_table_string = $annual_leave_list_string . $mc_list_string . $emergency_leave_list_string . $holiday_list_string;
 
+        $staff_id_list = array_merge($staff_id_list, $job_sheet->annual_leaves->pluck('id')->toArray());
+        $staff_id_list = array_merge($staff_id_list, $job_sheet->medical_leaves->pluck('id')->toArray());
+        $staff_id_list = array_merge($staff_id_list, $job_sheet->emergency_leaves->pluck('id')->toArray());
+        $staff_id_list = array_merge($staff_id_list, $job_sheet->holidays->pluck('id')->toArray());
+
         $pdf = Pdf::loadView('job_sheet_template', [
             'job_sheet_date' => (new DateTime($job_sheet['job_sheet_date']))->format('j-n-y (l)'),
             'draft' => $is_draft ? '- DRAFT' : '',

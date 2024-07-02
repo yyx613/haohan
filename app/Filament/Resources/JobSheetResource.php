@@ -702,8 +702,8 @@ class JobSheetResource extends Resource
                                             ->beforeStateDehydrated(function (string $operation, ?Model $record, Get $get, $state) {
                                                 if ($operation == "edit") {
                                                     if ($get('../../id') != null) {
-                                                        if ($get('../../status_flag') == 1) {
-                                                            if ($record != null) {
+                                                        if ($record != null) {
+                                                            if ($get('../../status_flag') == 1) {
                                                                 $existing = array_column(TeamVehicle::where('team_id', $record['id'])->get()->toArray(), 'vehicle_id');
 
                                                                 $new_entries = array_diff($state, $existing);
@@ -727,6 +727,8 @@ class JobSheetResource extends Resource
                                                                     }
                                                                 }
                                                             }
+
+                                                            TeamVehicle::where('team_id', $record['id'])->delete();
                                                         }
                                                     }
                                                 }
@@ -843,7 +845,7 @@ class JobSheetResource extends Resource
                                                             ->hidden(function (Get $get) {
                                                                 $task_id = $get('task_id');
 
-                                                                if (!isset ($task_id) || $task_id > 0) {
+                                                                if (!isset($task_id) || $task_id > 0) {
                                                                     return true;
                                                                 }
 
@@ -928,7 +930,7 @@ class JobSheetResource extends Resource
                                                                     if ($get('../../../../id') != null) {
                                                                         if ($get('../../../../status_flag') == 1) {
                                                                             if ($record != null) {
-                                                                                if (isset ($record['brands']) && in_array(-1, ($record['brands'])->toArray())) {
+                                                                                if (isset($record['brands']) && in_array(-1, ($record['brands'])->toArray())) {
                                                                                     $existing = TeamTask::find($record['id']);
 
                                                                                     if ($existing != null) {
@@ -1045,7 +1047,7 @@ class JobSheetResource extends Resource
                                                             ->hidden(function (Get $get) {
                                                                 $location_id = $get('location_id');
 
-                                                                if (!isset ($location_id) || $location_id > 0) {
+                                                                if (!isset($location_id) || $location_id > 0) {
                                                                     return true;
                                                                 }
 
@@ -1626,12 +1628,14 @@ class JobSheetResource extends Resource
         $total_staff_count = Staff::all()->count();
         $total_unassigned_staff_count = $total_staff_count - $assigned_staff_list_count - $annual_leave_count - $medical_leave_count - $emergency_leave_count - $holiday_count;
 
+        $total_assigned = $assigned_staff_list_count + $annual_leave_count + $medical_leave_count + $emergency_leave_count + $holiday_count;
+
         $staff_summary_component_list = [];
 
         array_push($staff_summary_component_list, Placeholder::make('total_assigned_staff')
-            ->label('Total staff assigned to team')
+            ->label('Total staff assigned')
             ->columnSpanFull()
-            ->content("{$assigned_staff_list_count}/{$total_staff_count}"));
+            ->content("{$total_assigned}/{$total_staff_count}"));
 
         array_push($staff_summary_component_list, Placeholder::make('total_annual_leave')
             ->label('Total annual leave')
