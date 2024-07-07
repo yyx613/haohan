@@ -1,10 +1,6 @@
 {
-    "heiti": {
-        "normal": "\/home\/ateases\/public_html\/haohan.at-eases.com\/storage\/fonts\/heiti_normal_df2e8a7c58b2836b0d06ee5b226a1a98",
-        "bold": "heiti_bold_df2e8a7c58b2836b0d06ee5b226a1a98"
-    },
     "arial": {
-        "normal": "\/home\/ateases\/public_html\/haohan.at-eases.com\/storage\/fonts\/arial_normal_a43b517714d5778f036c3f9075633a69",
-        "bold": "arial_bold_c8f55e7fb84c9355d587360490d16cb0"
+        "normal": "\/Users\/yuhao\/Documents\/Development\/at-ease\/haohan\/storage\/fonts\/arial_normal_f22f4b187ba7dc414f823a8ef53e1f51",
+        "bold": "arial_bold_21c7c114a85f0ca5bb9fd3f0e96380bb"
     }
 }

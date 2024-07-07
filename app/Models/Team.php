@@ -72,5 +72,25 @@ class Team extends Model
 
             TeamTask::where('team_id', $team['id'])->delete();
         });
+
+        self::created(function ($team) {
+            $job_sheet = JobSheet::find($team['job_sheet_id']);
+
+            if ($job_sheet != null && $job_sheet['status_flag'] == 1) {
+
+                JobSheetHistory::firstOrCreate(
+                    [
+                        'job_sheet_id' => $job_sheet['id'],
+                        'history_type' => 9,
+                        'ref_id_1' => $team['id'],
+                        'ref_id_2' => $team['id'],
+                        'version' => $job_sheet['version']
+                    ],
+                    [
+                        'update_by' => auth()->id()
+                    ]
+                );
+            }
+        });
     }
 }

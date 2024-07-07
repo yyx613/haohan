@@ -749,7 +749,7 @@ class JobSheetResource extends Resource
                                                     ->modalHeading('Select Team Vehicle')
                                                     ->modalSubmitActionLabel('Confirm Vehicle')
                                                     ->modalDescription('Unavailable vehicle will be hidden')
-                                                    ->modalWidth(MaxWidth::ScreenExtraLarge)
+                                                    ->modalWidth(MaxWidth::ScreenLarge)
                                             ),
                                         Fieldset::make('Tasks')
                                             ->schema([
@@ -758,6 +758,7 @@ class JobSheetResource extends Resource
                                                     ->label('')
                                                     ->relationship()
                                                     ->columns(2)
+                                                    ->defaultItems(0)
                                                     ->schema([
                                                         Select::make('task_id')
                                                             ->label('Task')

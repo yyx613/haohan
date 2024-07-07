@@ -10,53 +10,27 @@
       margin: 5px;
     }
 
-    @font-face {
-      font-family: 'Heiti';
-      font-style: normal;
-      font-weight: normal;
-      src: url("../storage/fonts/Heiti.otf");
-    }
-
-    @font-face {
-      font-family: 'Heiti';
-      font-style: normal;
-      font-weight: bold;
-      src: url("../storage/fonts/Heiti.otf");
-    }
-
-    @font-face {
-      font-family: 'Arial';
-      font-style: normal;
-      font-weight: normal;
-      src: url("../storage/fonts/Arial.ttf") format('truetype');
-    }
-
-    @font-face {
-      font-family: 'Arial';
-      font-style: normal;
-      font-weight: bold;
-      src: url("../storage/fonts/Arial_Bold.ttf") format('truetype');
-    }
-
     body {
       margin: 0px;
-      font-family: 'Arial', sans-serif;
+      font-family: 'arial', sans-serif;
     }
 
     .chinese {
       line-height: 10px;
-      font-family: 'Heiti', 'Arial', sans-serif;
+      font-family: 'yahei', 'arial', sans-serif;
     }
 
     table,
     tr {
       border-collapse: collapse;
-      border: 1px solid black;
+      /*border-style: hidden solid hidden solid;
+      border-right: 1px solid black;
+       border: 1px solid black;*/
     }
 
     th,
     td {
-      border: 1px solid black;
+      /* border: 1px solid black;*/
       font-size: 13px;
     }
 
@@ -81,11 +55,11 @@
     }
 
     .thin_bottom {
-      border-bottom: 1px solid #d9d9d9;
+      border-bottom: 1px solid #d9d9d9 !important;
     }
 
     .thin_top {
-      border-top: 1px solid #d9d9d9;
+      border-top: 1px solid #d9d9d9 !important;
     }
 
     .table_detail_key {
@@ -98,7 +72,7 @@
     }
 
     .editted {
-      background-color: #ff807980;
+      background-color: #ffc0bc;
     }
 
     .double {
@@ -142,25 +116,32 @@
       <th style="border: none;width:95%"></th>
     </tr>
     <tr style="border: none;">
-      <td style="border: none;width: 30%;">
+      <td style="border: none;width: 35%;">
         <h4>Daily Team & Job Arrangement {{$draft}}</h4>
         <h4 class="{{$updated_by_chinese}}">Last updated by: {{$updated_by}}</h4>
         <h4>Last updated at: {{$last_updated_at}}</h4>
         <br>
       </td>
-      <td style="border: none;width:70%"></td>
+      <td style="border: none;width:65%"></td>
     </tr>
   </table>
-  <table style="width: 100%;">
-    <tr style="background-color: #e1efda; text-align: center;">
-      <td style="width: 32%; padding-top: 8px; padding-bottom: 8px;">Date: {{$job_sheet_date}}</td>
-      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;">Team: {{$total_assigned_staff}}/{{$total_staff}}
+  <table style="width: 100%;border: 1px solid black;">
+    <tr style="background-color: #e1efda; text-align: center; border: 1px solid black;">
+      <td style="width: 32%; padding-top: 8px; padding-bottom: 8px;text-align: center;border:1px solid #000000;">
+        Date: {{$job_sheet_date}}</td>
+      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;text-align: center;border:1px solid #000000;">Team:
+        {{$total_assigned_staff}}/{{$total_staff}}
       </td>
-      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;">Repeat: {{$total_repeat}}</td>
-      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;">Vehicle:
+      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;text-align: center;border:1px solid #000000;">Repeat:
+        {{$total_repeat}}
+      </td>
+      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;text-align: center;border:1px solid #000000;">
+        Vehicle:
         {{$total_asisgned_vehicle}}/{{$total_vehicle}}
       </td>
-      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;">Rental: {{$total_rental}}</td>
+      <td style="width: 17%; padding-top: 8px; padding-bottom: 8px;text-align: center;border:1px solid #000000;">Rental:
+        {{$total_rental}}
+      </td>
     </tr>
   </table>
   <br>
