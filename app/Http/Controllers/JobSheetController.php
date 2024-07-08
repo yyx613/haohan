@@ -335,9 +335,11 @@ class JobSheetController extends Controller
                     $current_task_count = 0;
 
                     foreach ($team->team_tasks as $task) {
+                        $is_new_task = count($job_sheet->job_sheet_histories->where('history_type', 10)->where('ref_id_1', $task->id)) > 0;
+
                         $current_task_count_string = $current_task_count + 1;
 
-                        $name_editted = count($job_sheet->job_sheet_histories->where('history_type', 4)->where('ref_id_1', $task->id)) > 0 || $is_new_team ? 'editted' : '';
+                        $name_editted = count($job_sheet->job_sheet_histories->where('history_type', 4)->where('ref_id_1', $task->id)) > 0 || $is_new_team || $is_new_task ? 'editted' : '';
 
                         $team_task_list_string .= "<tr><td class='{$name_editted}' style='width: 10%; font-weight: bold;border-style:solid;border-color:black black white black;border-width:1px 1px 0 1px;'>Task {$current_task_count_string}</td>";
 
@@ -356,7 +358,7 @@ class JobSheetController extends Controller
                             }
                         }
 
-                        if (count($job_sheet->job_sheet_histories->where('history_type', 8)->where('ref_id_1', $task->id)) > 0 || $is_new_team) {
+                        if (count($job_sheet->job_sheet_histories->where('history_type', 8)->where('ref_id_1', $task->id)) > 0 || $is_new_team || $is_new_task) {
                             $brand_editted = 'editted';
                         }
 
@@ -376,7 +378,7 @@ class JobSheetController extends Controller
 
                         $task_name_chinese = $thisController->containChineseCharacters($task_name);
 
-                        $team_task_list_string .= "<td style='width: 10%; padding-top: 2px; padding-bottom: 2px; padding-right: 2px;border-bottom:1px solid #d9d9d9;'><span style='float: right;'>Branding :</span></td><td colspan='8' class='{$brand_editted}' style='width: 80%; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px; border-style:solid;border-width:1px;border-color: black black #d9d9d9 black;'><span class='{$task_name_chinese}'>{$task_name}</span>{$booth_count_string}<span class='{$brand_chinese}'>{$brands_string}</span></td></tr>";
+                        $team_task_list_string .= "<td style='width: 10%; padding-top: 2px; padding-bottom: 2px; padding-right: 2px;border-bottom:1px solid #d9d9d9;'><span style='float: right;'>Branding :</span></td><td colspan='8' class='{$brand_editted} {$name_editted}' style='width: 80%; padding-top: 2px; padding-bottom: 2px; padding-left: 5px; padding-right: 5px; border-style:solid;border-width:1px;border-color: black black #d9d9d9 black;'><span class='{$task_name_chinese}'>{$task_name}</span>{$booth_count_string}<span class='{$brand_chinese}'>{$brands_string}</span></td></tr>";
 
                         $task_location_string = '-';
                         $location_editted = '';
@@ -394,7 +396,7 @@ class JobSheetController extends Controller
                             }
                         }
 
-                        if (count($job_sheet->job_sheet_histories->where('history_type', 6)->where('ref_id_1', $task->id)) > 0 || $is_new_team) {
+                        if (count($job_sheet->job_sheet_histories->where('history_type', 6)->where('ref_id_1', $task->id)) > 0 || $is_new_team || $is_new_task) {
                             $location_editted = 'editted';
                         }
 

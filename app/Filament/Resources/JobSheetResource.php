@@ -787,7 +787,8 @@ class JobSheetResource extends Resource
                                                                                 $existing = TeamTask::firstWhere('id', $record['id']);
 
                                                                                 if ($existing != null) {
-                                                                                    if ($existing['task_id'] != ($state == -1 ? null : $state)) {
+
+                                                                                    if ($existing['task_id'] != $state) {
                                                                                         $version = (JobSheet::firstWhere('id', $get('../../../../id'))->version) + 1;
 
                                                                                         JobSheetHistory::firstOrCreate(
@@ -822,6 +823,7 @@ class JobSheetResource extends Resource
 
                                                                                 if ($existing != null) {
                                                                                     if ($existing['name'] != $state) {
+
                                                                                         $version = (JobSheet::firstWhere('id', $get('../../../../id'))->version) + 1;
 
                                                                                         JobSheetHistory::firstOrCreate(
