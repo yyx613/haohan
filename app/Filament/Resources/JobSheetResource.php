@@ -769,7 +769,7 @@ class JobSheetResource extends Resource
 
                                                                 $task_option_list[-1] = 'Others';
 
-                                                                asort($task_option_list);
+                                                                natcasesort($task_option_list);
 
                                                                 return $task_option_list;
                                                             })
@@ -868,7 +868,7 @@ class JobSheetResource extends Resource
 
                                                                 $brand_option_list[-1] = 'Others';
 
-                                                                asort($brand_option_list);
+                                                                natcasesort($brand_option_list);
 
                                                                 return $brand_option_list;
                                                             })
@@ -975,7 +975,7 @@ class JobSheetResource extends Resource
 
                                                                 $location_option_list[-1] = 'Others';
 
-                                                                asort($location_option_list);
+                                                                natcasesort($location_option_list);
 
                                                                 return $location_option_list;
                                                             })
