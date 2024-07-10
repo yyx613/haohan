@@ -101,7 +101,7 @@ class JobSheetResource extends Resource
                                         name: 'annual_leaves',
                                         titleAttribute: 'name',
                                         modifyQueryUsing: function (Builder $query, Get $get) use ($thisResource) {
-                                            $query->whereNull('deleted_at')->where('status_flag', 0)->whereNotIn('id', $thisResource->get_annual_leave_excluded_staff($get));
+                                            $query->join('groupings', 'staffs.grouping_id', '=', 'groupings.id')->whereNull('staffs.deleted_at')->where('status_flag', 0)->whereNotIn('staffs.id', $thisResource->get_annual_leave_excluded_staff($get))->orderBy('groupings.seq_no')->orderBy('staffs.seq_no');
                                         }
                                     )
                                     ->pivotData([
@@ -152,8 +152,8 @@ class JobSheetResource extends Resource
 
                                                 return $thisResource->populate_staff_selection_component_list($selected_members, $thisResource->get_annual_leave_excluded_staff($get));
                                             })
-                                            ->action(function ($data, Set $set) {
-                                                $set('annual_leaves', $data['staff_list']);
+                                            ->action(function ($data, Set $set) use ($thisResource) {
+                                                $set('annual_leaves', $thisResource->sort_staff($data['staff_list']));
                                             })
                                             ->modalHeading('Select Annual Leave Member')
                                             ->modalDescription('Unavailable staff will be hidden')
@@ -177,7 +177,7 @@ class JobSheetResource extends Resource
                                         name: 'medical_leaves',
                                         titleAttribute: 'name',
                                         modifyQueryUsing: function (Builder $query, Get $get) use ($thisResource) {
-                                            $query->whereNull('deleted_at')->where('status_flag', 0)->whereNotIn('id', $thisResource->get_mc_excluded_staff($get));
+                                            $query->join('groupings', 'staffs.grouping_id', '=', 'groupings.id')->whereNull('staffs.deleted_at')->where('status_flag', 0)->whereNotIn('staffs.id', $thisResource->get_mc_excluded_staff($get))->orderBy('groupings.seq_no')->orderBy('staffs.seq_no');
                                         }
                                     )
                                     ->pivotData([
@@ -234,8 +234,8 @@ class JobSheetResource extends Resource
 
                                                 return $thisResource->populate_staff_selection_component_list($selected_members, $thisResource->get_mc_excluded_staff($get));
                                             })
-                                            ->action(function ($data, Set $set) {
-                                                $set('medical_leaves', $data['staff_list']);
+                                            ->action(function ($data, Set $set) use ($thisResource) {
+                                                $set('medical_leaves', $thisResource->sort_staff($data['staff_list']));
                                             })
                                             ->modalHeading('Select MC Member')
                                             ->modalDescription('Unavailable staff will be hidden')
@@ -259,7 +259,7 @@ class JobSheetResource extends Resource
                                         name: 'emergency_leaves',
                                         titleAttribute: 'name',
                                         modifyQueryUsing: function (Builder $query, Get $get) use ($thisResource) {
-                                            $query->whereNull('deleted_at')->where('status_flag', 0)->whereNotIn('id', $thisResource->get_emergency_leave_excluded_staff($get));
+                                            $query->join('groupings', 'staffs.grouping_id', '=', 'groupings.id')->whereNull('staffs.deleted_at')->where('status_flag', 0)->whereNotIn('staffs.id', $thisResource->get_emergency_leave_excluded_staff($get))->orderBy('groupings.seq_no')->orderBy('staffs.seq_no');
                                         }
                                     )
                                     ->pivotData([
@@ -316,8 +316,8 @@ class JobSheetResource extends Resource
 
                                                 return $thisResource->populate_staff_selection_component_list($selected_members, $thisResource->get_emergency_leave_excluded_staff($get));
                                             })
-                                            ->action(function ($data, Set $set) {
-                                                $set('emergency_leaves', $data['staff_list']);
+                                            ->action(function ($data, Set $set) use ($thisResource) {
+                                                $set('emergency_leaves', $thisResource->sort_staff($data['staff_list']));
                                             })
                                             ->modalHeading('Select Emergency Leave Member')
                                             ->modalDescription('Unavailable staff will be hidden')
@@ -341,7 +341,7 @@ class JobSheetResource extends Resource
                                         name: 'holidays',
                                         titleAttribute: 'name',
                                         modifyQueryUsing: function (Builder $query, Get $get) use ($thisResource) {
-                                            $query->whereNull('deleted_at')->where('status_flag', 0)->whereNotIn('id', $thisResource->get_holiday_excluded_staff($get));
+                                            $query->join('groupings', 'staffs.grouping_id', '=', 'groupings.id')->whereNull('staffs.deleted_at')->where('status_flag', 0)->whereNotIn('staffs.id', $thisResource->get_holiday_excluded_staff($get))->orderBy('groupings.seq_no')->orderBy('staffs.seq_no');
                                         }
                                     )
                                     ->pivotData([
@@ -398,8 +398,8 @@ class JobSheetResource extends Resource
 
                                                 return $thisResource->populate_staff_selection_component_list($selected_members, $thisResource->get_holiday_excluded_staff($get));
                                             })
-                                            ->action(function ($data, Set $set) {
-                                                $set('holidays', $data['staff_list']);
+                                            ->action(function ($data, Set $set) use ($thisResource) {
+                                                $set('holidays', $thisResource->sort_staff($data['staff_list']));
                                             })
                                             ->modalHeading('Select Holiday Member')
                                             ->modalDescription('Unavailable staff will be hidden')
@@ -538,7 +538,7 @@ class JobSheetResource extends Resource
                                                 name: 'leaders',
                                                 titleAttribute: 'name',
                                                 modifyQueryUsing: function (Builder $query, Get $get, $state) use ($thisResource) {
-                                                    $query->whereNull('deleted_at')->where('status_flag', 0)->whereNotIn('id', $thisResource->get_leader_excluded_staff($get, $state));
+                                                    $query->join('groupings', 'staffs.grouping_id', '=', 'groupings.id')->whereNull('staffs.deleted_at')->where('status_flag', 0)->whereNotIn('staffs.id', $thisResource->get_leader_excluded_staff($get, $state))->orderBy('groupings.seq_no')->orderBy('staffs.seq_no');
                                                 }
                                             )
                                             ->pivotData([
@@ -592,8 +592,8 @@ class JobSheetResource extends Resource
 
                                                         return $thisResource->populate_staff_selection_component_list($this_team_selected_leaders, $thisResource->get_leader_excluded_staff($get, $this_team_selected_leaders));
                                                     })
-                                                    ->action(function ($data, Set $set) {
-                                                        $set('leaders', $data['staff_list']);
+                                                    ->action(function ($data, Set $set) use ($thisResource) {
+                                                        $set('leaders', $thisResource->sort_staff($data['staff_list']));
                                                     })
                                                     ->modalHeading('Select Team Leader')
                                                     ->modalSubmitActionLabel('Confirm Leader')
@@ -616,7 +616,7 @@ class JobSheetResource extends Resource
                                                 name: 'team_members',
                                                 titleAttribute: 'name',
                                                 modifyQueryUsing: function (Builder $query, Get $get, $state) use ($thisResource) {
-                                                    $query->whereNull('deleted_at')->where('status_flag', 0)->whereNotIn('id', $thisResource->get_member_excluded_staff($get, $state));
+                                                    $query->join('groupings', 'staffs.grouping_id', '=', 'groupings.id')->whereNull('staffs.deleted_at')->where('status_flag', 0)->whereNotIn('staffs.id', $thisResource->get_member_excluded_staff($get, $state))->orderBy('groupings.seq_no')->orderBy('staffs.seq_no');
                                                 }
                                             )
                                             ->getOptionLabelFromRecordUsing(fn(Model $record) => $record->nameWithRole)
@@ -667,8 +667,8 @@ class JobSheetResource extends Resource
 
                                                         return $thisResource->populate_staff_selection_component_list($this_team_selected_members, $thisResource->get_member_excluded_staff($get, $this_team_selected_members));
                                                     })
-                                                    ->action(function ($data, Set $set) {
-                                                        $set('team_members', $data['staff_list']);
+                                                    ->action(function ($data, Set $set) use ($thisResource) {
+                                                        $set('team_members', $thisResource->sort_staff($data['staff_list']));
                                                     })
                                                     ->modalHeading('Select Team Member')
                                                     ->modalSubmitActionLabel('Confirm Member')
@@ -694,7 +694,7 @@ class JobSheetResource extends Resource
                                                 modifyQueryUsing: function (Builder $query, Get $get, $state) use ($thisResource) {
                                                     $selected_vehicle = $thisResource->get_excluded_vehicle($get, $state);
 
-                                                    $query->whereNull('deleted_at')->whereNotIn('id', $selected_vehicle);
+                                                    $query->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')->whereNull('vehicles.deleted_at')->whereNotIn('vehicles.id', $selected_vehicle)->orderBy('vehicle_types.seq_no')->orderBy('vehicles.seq_no');
                                                 }
                                             )
                                             ->getOptionLabelFromRecordUsing(fn(Model $record) => $record->carPlateWithVehicleType)
@@ -702,8 +702,8 @@ class JobSheetResource extends Resource
                                             ->beforeStateDehydrated(function (string $operation, ?Model $record, Get $get, $state) {
                                                 if ($operation == "edit") {
                                                     if ($get('../../id') != null) {
-                                                        if ($get('../../status_flag') == 1) {
-                                                            if ($record != null) {
+                                                        if ($record != null) {
+                                                            if ($get('../../status_flag') == 1) {
                                                                 $existing = array_column(TeamVehicle::where('team_id', $record['id'])->get()->toArray(), 'vehicle_id');
 
                                                                 $new_entries = array_diff($state, $existing);
@@ -727,6 +727,8 @@ class JobSheetResource extends Resource
                                                                     }
                                                                 }
                                                             }
+
+                                                            TeamVehicle::where('team_id', $record['id'])->delete();
                                                         }
                                                     }
                                                 }
@@ -741,13 +743,13 @@ class JobSheetResource extends Resource
 
                                                         return $thisResource->populate_vehicle_selection_component_list($this_team_selected_vehicles, $thisResource->get_excluded_vehicle($get, $this_team_selected_vehicles));
                                                     })
-                                                    ->action(function ($data, Set $set) {
-                                                        $set('team_vehicles', $data['vehicle_list']);
+                                                    ->action(function ($data, Set $set) use ($thisResource) {
+                                                        $set('team_vehicles', $thisResource->sort_vehicle($data['vehicle_list']));
                                                     })
                                                     ->modalHeading('Select Team Vehicle')
                                                     ->modalSubmitActionLabel('Confirm Vehicle')
                                                     ->modalDescription('Unavailable vehicle will be hidden')
-                                                    ->modalWidth(MaxWidth::ScreenExtraLarge)
+                                                    ->modalWidth(MaxWidth::ScreenLarge)
                                             ),
                                         Fieldset::make('Tasks')
                                             ->schema([
@@ -756,6 +758,7 @@ class JobSheetResource extends Resource
                                                     ->label('')
                                                     ->relationship()
                                                     ->columns(2)
+                                                    ->defaultItems(0)
                                                     ->schema([
                                                         Select::make('task_id')
                                                             ->label('Task')
@@ -766,7 +769,7 @@ class JobSheetResource extends Resource
 
                                                                 $task_option_list[-1] = 'Others';
 
-                                                                asort($task_option_list);
+                                                                natcasesort($task_option_list);
 
                                                                 return $task_option_list;
                                                             })
@@ -784,7 +787,8 @@ class JobSheetResource extends Resource
                                                                                 $existing = TeamTask::firstWhere('id', $record['id']);
 
                                                                                 if ($existing != null) {
-                                                                                    if ($existing['task_id'] != ($state == -1 ? null : $state)) {
+
+                                                                                    if ($existing['task_id'] != $state) {
                                                                                         $version = (JobSheet::firstWhere('id', $get('../../../../id'))->version) + 1;
 
                                                                                         JobSheetHistory::firstOrCreate(
@@ -819,6 +823,7 @@ class JobSheetResource extends Resource
 
                                                                                 if ($existing != null) {
                                                                                     if ($existing['name'] != $state) {
+
                                                                                         $version = (JobSheet::firstWhere('id', $get('../../../../id'))->version) + 1;
 
                                                                                         JobSheetHistory::firstOrCreate(
@@ -843,7 +848,7 @@ class JobSheetResource extends Resource
                                                             ->hidden(function (Get $get) {
                                                                 $task_id = $get('task_id');
 
-                                                                if (!isset ($task_id) || $task_id > 0) {
+                                                                if (!isset($task_id) || $task_id > 0) {
                                                                     return true;
                                                                 }
 
@@ -865,7 +870,7 @@ class JobSheetResource extends Resource
 
                                                                 $brand_option_list[-1] = 'Others';
 
-                                                                asort($brand_option_list);
+                                                                natcasesort($brand_option_list);
 
                                                                 return $brand_option_list;
                                                             })
@@ -928,7 +933,7 @@ class JobSheetResource extends Resource
                                                                     if ($get('../../../../id') != null) {
                                                                         if ($get('../../../../status_flag') == 1) {
                                                                             if ($record != null) {
-                                                                                if (isset ($record['brands']) && in_array(-1, ($record['brands'])->toArray())) {
+                                                                                if (isset($record['brands']) && in_array(-1, ($record['brands'])->toArray())) {
                                                                                     $existing = TeamTask::find($record['id']);
 
                                                                                     if ($existing != null) {
@@ -972,7 +977,7 @@ class JobSheetResource extends Resource
 
                                                                 $location_option_list[-1] = 'Others';
 
-                                                                asort($location_option_list);
+                                                                natcasesort($location_option_list);
 
                                                                 return $location_option_list;
                                                             })
@@ -1045,7 +1050,7 @@ class JobSheetResource extends Resource
                                                             ->hidden(function (Get $get) {
                                                                 $location_id = $get('location_id');
 
-                                                                if (!isset ($location_id) || $location_id > 0) {
+                                                                if (!isset($location_id) || $location_id > 0) {
                                                                     return true;
                                                                 }
 
@@ -1626,12 +1631,14 @@ class JobSheetResource extends Resource
         $total_staff_count = Staff::all()->count();
         $total_unassigned_staff_count = $total_staff_count - $assigned_staff_list_count - $annual_leave_count - $medical_leave_count - $emergency_leave_count - $holiday_count;
 
+        $total_assigned = $assigned_staff_list_count + $annual_leave_count + $medical_leave_count + $emergency_leave_count + $holiday_count;
+
         $staff_summary_component_list = [];
 
         array_push($staff_summary_component_list, Placeholder::make('total_assigned_staff')
-            ->label('Total staff assigned to team')
+            ->label('Total staff assigned')
             ->columnSpanFull()
-            ->content("{$assigned_staff_list_count}/{$total_staff_count}"));
+            ->content("{$total_assigned}/{$total_staff_count}"));
 
         array_push($staff_summary_component_list, Placeholder::make('total_annual_leave')
             ->label('Total annual leave')
@@ -1720,5 +1727,37 @@ class JobSheetResource extends Resource
         );
 
         return $vehicle_info_component_list;
+    }
+
+    public static function sort_staff($staff_id_list)
+    {
+        if ($staff_id_list != null && count($staff_id_list) > 0) {
+            $staff = Staff::with('grouping')->whereIn('id', $staff_id_list)->get();
+
+            $staff = $staff->sortBy([
+                fn($a, $b) => $a['grouping']['seq_no'] <=> $b['grouping']['seq_no'],
+                fn($a, $b) => $a['seq_no'] <=> $b['seq_no']
+            ]);
+
+            $staff_id_list = $staff->pluck('id')->all();
+        }
+
+        return $staff_id_list;
+    }
+
+    public static function sort_vehicle($vehicle_id_list)
+    {
+        if ($vehicle_id_list != null && count($vehicle_id_list) > 0) {
+            $vehicle = Vehicle::with('vehicle_type')->whereIn('id', $vehicle_id_list)->get();
+
+            $vehicle = $vehicle->sortBy([
+                fn($a, $b) => $a['vehicle_type']['seq_no'] <=> $b['vehicle_type']['seq_no'],
+                fn($a, $b) => $a['seq_no'] <=> $b['seq_no']
+            ]);
+
+            $vehicle_id_list = $vehicle->pluck('id')->all();
+        }
+
+        return $vehicle_id_list;
     }
 }

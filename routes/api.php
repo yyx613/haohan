@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/job_sheet/download_pdf', [JobSheetController::class, 'downloadPDF']);
+Route::get('/job_sheet/preview_pdf', [JobSheetController::class, 'previewPDF']);

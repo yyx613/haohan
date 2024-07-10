@@ -91,5 +91,29 @@ class TeamTask extends Model
                 $team_task->location_id = null;
             }
         });
+
+        self::created(function ($task) {
+            $team = Team::find($task['team_id']);
+
+            if ($team != null) {
+                $job_sheet = $team->job_sheet()->first();
+
+                if ($job_sheet != null && $job_sheet['status_flag'] == 1) {
+
+                    JobSheetHistory::firstOrCreate(
+                        [
+                            'job_sheet_id' => $job_sheet['id'],
+                            'history_type' => 10,
+                            'ref_id_1' => $task['id'],
+                            'ref_id_2' => $task['team_id'],
+                            'version' => $job_sheet['version']
+                        ],
+                        [
+                            'update_by' => auth()->id()
+                        ]
+                    );
+                }
+            }
+        });
     }
 }
