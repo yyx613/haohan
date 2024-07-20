@@ -84,7 +84,7 @@ class Team extends Model
                         'history_type' => 9,
                         'ref_id_1' => $team['id'],
                         'ref_id_2' => $team['id'],
-                        'version' => $job_sheet['version']
+                        'version' => $job_sheet['version'] + 1
                     ],
                     [
                         'update_by' => auth()->id()

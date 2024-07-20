@@ -106,7 +106,7 @@ class TeamTask extends Model
                             'history_type' => 10,
                             'ref_id_1' => $task['id'],
                             'ref_id_2' => $task['team_id'],
-                            'version' => $job_sheet['version']
+                            'version' => $job_sheet['version'] + 1
                         ],
                         [
                             'update_by' => auth()->id()

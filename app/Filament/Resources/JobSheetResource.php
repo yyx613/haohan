@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\JobSheetResource\Pages;
+use App\Forms\Components\ActionFloatCss;
 use App\Models\Brand;
 use App\Models\JobSheet;
 use App\Models\JobSheetHistory;
@@ -59,6 +60,7 @@ class JobSheetResource extends Resource
 
         return $form
             ->schema([
+                ActionFloatCss::make(),
                 Tabs::make('Form Tabs')
                     ->columnSpanFull()
                     ->tabs([
@@ -458,7 +460,7 @@ class JobSheetResource extends Resource
                                                                 $existing = Team::firstWhere('id', $record['id']);
 
                                                                 if ($existing != null) {
-                                                                    $existing['time'] = (new DateTime($existing['time']))->format('H:i');
+                                                                    $existing['time'] = $existing['time'] == null ? null : (new DateTime($existing['time']))->format('H:i');
 
                                                                     if ($existing['time'] != $state) {
                                                                         $version = (JobSheet::firstWhere('id', $get('../../id'))->version) + 1;
