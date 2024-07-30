@@ -778,9 +778,6 @@ class JobSheetResource extends Resource
                                                             ->searchable()
                                                             ->preload()
                                                             ->live(onBlur: true)
-                                                            ->afterStateUpdated(function ($state, Set $set) {
-                                                                $set('brands', [-1]);
-                                                            })
                                                             ->beforeStateDehydrated(function (Select $component, string $operation, ?Model $record, Get $get, $state) {
                                                                 if ($operation == "edit") {
                                                                     if ($get('../../../../id') != null) {

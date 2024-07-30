@@ -351,7 +351,7 @@ class JobSheetController extends Controller
                         $task_name_chinese = '';
 
                         if ($task->task_id != null || $task->task_id > 0) {
-                            $this_task = Task::find($task->task_id);
+                            $this_task = Task::withTrashed()->find($task->task_id);
 
                             if ($this_task != null) {
                                 $task_name = $this_task->name;
@@ -389,7 +389,7 @@ class JobSheetController extends Controller
                         }
 
                         if ($task->location_id != null && $task->location_id > 0) {
-                            $this_location = Location::find($task->location_id);
+                            $this_location = Location::withTrashed()->find($task->location_id);
 
                             if ($this_location != null) {
                                 $task_location_string = $this_location->name;
@@ -1158,7 +1158,7 @@ class JobSheetController extends Controller
                         $task_name_chinese = '';
 
                         if ($task->task_id != null || $task->task_id > 0) {
-                            $this_task = Task::find($task->task_id);
+                            $this_task = Task::withTrashed()->find($task->task_id);
 
                             if ($this_task != null) {
                                 $task_name = $this_task->name;
@@ -1196,7 +1196,7 @@ class JobSheetController extends Controller
                         }
 
                         if ($task->location_id != null && $task->location_id > 0) {
-                            $this_location = Location::find($task->location_id);
+                            $this_location = Location::withTrashed()->find($task->location_id);
 
                             if ($this_location != null) {
                                 $task_location_string = $this_location->name;
